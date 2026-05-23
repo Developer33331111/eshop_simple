@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use App\Actions\Auth\LoginUserAction;
-use App\DTO\auth\LoginData;
+use App\DTO\Auth\LoginData;
 
 class LoginController extends Controller
 {
@@ -23,9 +19,11 @@ class LoginController extends Controller
       deviceName: $request->validated('device_name')
     );
 
-    return response()->json([
-      $userLoginAction->execute($userLoginActionDTO)
-    ]);
+    $response = $userLoginAction->execute($userLoginActionDTO);
+
+    return response()->json(
+      $response
+    );
 
   }
 
