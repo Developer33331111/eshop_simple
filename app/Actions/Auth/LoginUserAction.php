@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
-use App\DTO\auth\LoginData;
+use App\DTO\Auth\LoginData;
 use App\Services\AuthService;
 use App\DTO\Auth\LoginResponse;
 
@@ -31,7 +31,7 @@ class LoginUserAction
 
       $user,
 
-      $data->device_name ?? 'api-token',
+      $data->deviceName ?? 'api-token',
 
       $user->getPermissionNames()->toArray()
 

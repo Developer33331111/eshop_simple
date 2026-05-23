@@ -13,16 +13,16 @@ class LoginController extends Controller
 
   public function login(LoginRequest $request, LoginUserAction $userLoginAction) {
 
-    $userLoginActionDTO = new LoginData(
+    $dtoLoginData = new LoginData(
       email: $request->validated('email'),
       password: $request->validated('password'),
-      deviceName: $request->validated('device_name')
+      deviceName: $request->validated('deviceName')
     );
 
     $response = $userLoginAction->execute($userLoginActionDTO);
 
     return response()->json(
-      $response
+      'data' => $response
     );
 
   }
