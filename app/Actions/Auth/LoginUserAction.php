@@ -9,7 +9,6 @@ use App\Models\User;
 use App\DTO\Auth\LoginData;
 use App\Services\AuthService;
 use App\DTO\Auth\LoginResponse;
-use App\Http\Resources\UserLoginRegisterResource;
 
 class LoginUserAction
 {
@@ -40,7 +39,7 @@ class LoginUserAction
 
     return new LoginResponse(
       token: $token,
-      user: new UserLoginRegisterResource($user)
+      user: $user
     );
 
   }
