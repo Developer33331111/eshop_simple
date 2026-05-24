@@ -2,14 +2,13 @@
 
 namespace App\Actions\Auth;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 use App\Models\User;
 use App\DTO\Auth\RegisterData;
 use App\Services\AuthService;
 use App\DTO\Auth\RegisterResponse;
-use Spatie\Permission\Models\Role;
 
 class RegisterUserAction
 {
@@ -18,42 +17,36 @@ class RegisterUserAction
 
   public function execute(RegisterData $data): RegisterResponse {
 
-    $user = User::create([
+    return DB::transaction(function() use ($data) {
 
-      'name' => $data->name,
+      $user = User::create([
 
-      'email' => $data->email,
+        'name' => $data->name,
 
-      'password' => Hash::make($data->password)
+        'email' => $data->email,
 
-    ]);
+        'password' => Hash::make($data->password)
 
-    //Role::create(['name' => 'User']);
-
-    $user->assignRole('User');
-
-    if( (!$user) || ( !Hash::check($data->password, $user->password)) ) {
-
-      throw ValidationException::withMessages([
-        'credentials' => ['Invalid email or password.']
       ]);
 
-    }
+      $user->assignRole('User');
 
-    $token = $this->authService->createToken(
+      $token = $this->authService->createToken(
 
-      $user,
+        $user,
 
-      $data->deviceName ?? 'api-token',
+        $data->deviceName ?? 'api-token',
 
-      $user->getPermissionNames()->toArray()
+        $user->getPermissionNames()->toArray()
 
-    );
+      );
 
-    return new RegisterResponse(
-      token: $token,
-      user: $user->only('id', 'name', 'email')
-    );
+      return new RegisterResponse(
+        token: $token,
+        user: $user->only('id', 'name', 'email')
+      );
+
+    });
 
   }
 
