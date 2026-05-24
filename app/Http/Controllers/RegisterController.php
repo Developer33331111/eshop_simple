@@ -4,16 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests\RegisterRequest;
+use App\Actions\Auth\RegisterUserAction;
+use App\DTO\Auth\RegisterData;
+
 class RegisterController extends Controller
 {
 
-  public fucntion register() {
+  public function register(RegisterRequest $request, RegisterUserAction $userRegisterAction) {
 
-    //Role::create(['name' => 'Admin']);
+    $dtoRegisterData = new RegisterData(
+      name: $request->validated('name'),
+      email: $request->validated('email'),
+      password: $request->validated('password'),
+      password_confirmation: $request->validated('password_confirmation')
+    );
 
-    //$user->assignRole('Admin');
+    $response = $userRegisterAction->execute($dtoRegisterData);
 
-    //echo Hash::make('testtest123');
+    return response()->json([
+      'data' => $response
+    ]);
 
   }
 

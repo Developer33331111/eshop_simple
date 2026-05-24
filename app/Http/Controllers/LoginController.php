@@ -16,14 +16,14 @@ class LoginController extends Controller
     $dtoLoginData = new LoginData(
       email: $request->validated('email'),
       password: $request->validated('password'),
-      deviceName: $request->validated('deviceName')
+      deviceName: $request->validated('device_name')
     );
 
-    $response = $userLoginAction->execute($userLoginActionDTO);
+    $response = $userLoginAction->execute($dtoLoginData);
 
-    return response()->json(
+    return response()->json([
       'data' => $response
-    );
+    ]);
 
   }
 
