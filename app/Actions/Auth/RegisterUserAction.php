@@ -9,6 +9,7 @@ use App\Models\User;
 use App\DTO\Auth\RegisterData;
 use App\Services\AuthService;
 use App\DTO\Auth\RegisterResponse;
+use Spatie\Permission\Models\Role;
 
 class RegisterUserAction
 {
@@ -27,7 +28,7 @@ class RegisterUserAction
 
     ]);
 
-    Role::create(['name' => 'User']);
+    //Role::create(['name' => 'User']);
 
     $user->assignRole('User');
 
