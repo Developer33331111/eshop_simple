@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
 use App\Actions\Auth\LoginUserAction;
 use App\DTO\Auth\LoginData;
+use App\Http\Resources\UserLoginRegisterResource;
 
 class LoginController extends Controller
 {
@@ -22,7 +23,10 @@ class LoginController extends Controller
     $response = $userLoginAction->execute($dtoLoginData);
 
     return response()->json([
-      'data' => $response
+      'data' => [
+        'token' => $response->token,
+        'user' => new UserLoginRegisterResource($response->user)
+      ]
     ]);
 
   }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Actions\Auth\RegisterUserAction;
 use App\DTO\Auth\RegisterData;
+use App\Http\Resources\UserLoginRegisterResource;
 
 class RegisterController extends Controller
 {
@@ -23,7 +24,10 @@ class RegisterController extends Controller
     $response = $userRegisterAction->execute($dtoRegisterData);
 
     return response()->json([
-      'data' => $response
+      'data' => [
+        'token' => $response->token,
+        'user' => new UserLoginRegisterResource($response->user)
+      ]
     ]);
 
   }
