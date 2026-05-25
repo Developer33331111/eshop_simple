@@ -8,6 +8,8 @@ git clone https://github.com/Developer33331111/eshop_simple.git
 
 cd eshop_simple
 
+composer install
+
 ## Environment setup
 
 cd .env.example .env
