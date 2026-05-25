@@ -30,4 +30,20 @@ class ProductService {
 
   }
 
+  public function updateProduct(int $id, array $data): Product {
+
+    $product = Product::findOrFail($id);
+
+    $product->update([
+      'code' => $data['code'] ?? null,
+      'name' => $data['name'],
+      'seo_url' => $data['seo_url'] ?? null,
+      'price' => $data['price'],
+      'description' => $data['description'] ?? null
+    ]);
+
+    return $product;
+
+  }
+
 }
