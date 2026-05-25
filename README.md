@@ -32,16 +32,18 @@ php artisan migrate --seed
     "password": "",
     "device_name" : ""
 }
+```
 
-```json
 <b>POST /api/register</b>
 
+```json
 {
     "name": "",
     "email": "",
     "password": "",
     "password_confirmation" : ""
 }
+```
 
 <b>GET /api/products</b>
 
@@ -55,6 +57,7 @@ php artisan migrate --seed
     "price": 100,
     "description": "Text",
 }
+```
 
 <b>PUT /api/products/{id}</b>
 
@@ -66,5 +69,6 @@ php artisan migrate --seed
     "price": 100,
     "description": "Text",
 }
+```
 
 <b>DELETE /api/products/{id}</b>
