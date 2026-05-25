@@ -18,9 +18,9 @@ php artisan key:generate
 
 Set Database
 
-DB_DATABASE=eshop_simple
-DB_USERNAME=root
-DB_PASSWORD=
+DB_DATABASE=eshop_simple<br />
+DB_USERNAME=root<br />
+DB_PASSWORD=<br />
 
 php artisan migrate --seed
 
