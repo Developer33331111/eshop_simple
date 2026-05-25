@@ -16,4 +16,18 @@ class ProductService {
 
   }
 
+  public function createProduct(array $data): Product {
+
+    $product = Product::create([
+      'code' => $data['code'] ?? null,
+      'name' => $data['name'],
+      'seo_url' => $data['seo_url'] ?? null,
+      'price' => $data['price'],
+      'description' => $data['description'] ?? null
+    ]);
+
+    return $product;
+
+  }
+
 }

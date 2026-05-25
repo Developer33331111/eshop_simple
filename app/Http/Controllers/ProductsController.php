@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductsController extends Controller
 {
@@ -23,20 +24,17 @@ class ProductsController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreProductRequest $request)
     {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+      $product = $this->productService->createProduct($request->validated());
+
+      return response()->json([
+        'data' => [
+          'product' => new ProductResource($product)
+        ]
+      ], 201);
+
     }
 
     /**

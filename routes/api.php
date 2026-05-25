@@ -10,8 +10,10 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::middleware(['auth:sanctum', 'role:Admin|User'])->group(function() {
+Route::middleware(['auth:sanctum'])->group(function() {
 
-  Route::get('products',[ProductsController::class, 'index']);
+  Route::get('products',[ProductsController::class, 'index'])->middleware(['role:Admin|User']);
+
+  Route::post('products',[ProductsController::class, 'store'])->middleware(['auth:sanctum', 'role:Admin']);
 
 });
