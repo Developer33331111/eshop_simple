@@ -26,7 +26,7 @@ class RegisterTest extends TestCase
 
         $response = $this->postJson('api/register', [
           'name' => 'Test user',
-          'email' => 'testuser@123laravel123.com',
+          'email' => 'testuser@123testuser123.com',
           'password' => 'password123',
           'password_confirmation' => 'password123'
         ]);
