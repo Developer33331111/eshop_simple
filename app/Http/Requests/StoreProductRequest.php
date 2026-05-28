@@ -28,6 +28,9 @@ class StoreProductRequest extends FormRequest
             'code' => ['nullable', 'string'],
             'seo_url' => ['nullable', 'string'],
             'description' => ['nullable', 'text'],
+
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+
             'parameters' => ['nullable', 'array'],
             'parameters.*.name' => ['required_with:parameters', 'string', 'max:100'],
             'parameters.*.value' => ['required_with:parameters', 'string', 'max:100'],

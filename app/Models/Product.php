@@ -17,7 +17,8 @@ class Product extends Model
     'name',
     'seo_url',
     'price',
-    'description'
+    'description',
+    'image'
 
   ];
 

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Product;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ProductService {
 
@@ -18,12 +20,19 @@ class ProductService {
 
   public function createProduct(array $data): Product {
 
+    if(!empty($data['image'])) {
+
+      $data['image'] = $this->storeImage($data['image']);
+
+    }
+
     $product = Product::create([
       'code' => $data['code'] ?? null,
       'name' => $data['name'],
       'seo_url' => $data['seo_url'] ?? null,
       'price' => $data['price'],
-      'description' => $data['description'] ?? null
+      'description' => $data['description'] ?? null,
+      'image' => $data['image'] ?? null
     ]);
 
     if( !empty($data['parameters']) ) {
@@ -40,12 +49,21 @@ class ProductService {
 
     $product = Product::findOrFail($id);
 
+    if(!empty($data['image'])) {
+
+      $this->deleteImage($product->image);
+
+      $data['image'] = $this->storeImage($data['image']);
+
+    }
+
     $product->update([
       'code' => $data['code'] ?? null,
       'name' => $data['name'],
       'seo_url' => $data['seo_url'] ?? null,
       'price' => $data['price'],
-      'description' => $data['description'] ?? null
+      'description' => $data['description'] ?? null,
+      'image' => $data['image'] ?? null
     ]);
 
     $product->parameters()->delete();
@@ -60,12 +78,27 @@ class ProductService {
 
   }
 
+  private function storeImage(UploadedFile $file): string {
+
+    return $file->store('products_images', 'public');
+
+  }
 
   public function deleteProduct(int $id): bool {
 
     $product = Product::findOrFail($id);
 
     return $product->delete();
+
+  }
+
+  private function deleteImage(?string $path): void {
+
+    if($path && Storage::disk('public')->exists($path)) {
+
+      Storage::disk('public')->delete($path);
+
+    }
 
   }
 

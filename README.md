@@ -61,7 +61,7 @@ php artisan migrate --seed
 }
 ```
 
-<b>PUT /api/products/{id}</b>
+<b>POST /api/products/{id}/update</b>
 
 ```json
 {
