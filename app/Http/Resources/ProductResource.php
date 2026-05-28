@@ -21,7 +21,14 @@ class ProductResource extends JsonResource
         'name' => $this->name,
         'seo_url' => $this->seo_url,
         'price' => $this->price,
-        'description' => $this->description
+        'description' => $this->description,
+        'parameters' => $this->whenLoaded('parameters', fn() =>
+          $this->parameters->map(fn($param) => [
+            'name' => $param->name,
+            'value' => $param->value
+          ])
+        ),
+        'created_at' => $this->description
       ];
 
     }

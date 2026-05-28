@@ -10,7 +10,7 @@ class ProductService {
 
   public function getProductsPaginate(int $perPage = 10): LengthAwarePaginator {
 
-    $products = Product::query()->latest()->paginate($perPage);
+    $products = Product::query()->with('parameters')->latest()->paginate($perPage);
 
     return $products;
 
@@ -26,7 +26,13 @@ class ProductService {
       'description' => $data['description'] ?? null
     ]);
 
-    return $product;
+    if( !empty($data['parameters']) ) {
+
+      $product->parameters()->createMany($data['parameters']);
+
+    }
+
+    return $product->load('parameters');
 
   }
 
@@ -42,7 +48,15 @@ class ProductService {
       'description' => $data['description'] ?? null
     ]);
 
-    return $product;
+    $product->parameters()->delete();
+
+    if( !empty($data['parameters']) ) {
+
+      $product->parameters()->createMany($data['parameters']);
+
+    }
+
+    return $product->load('parameters');
 
   }
 

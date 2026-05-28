@@ -25,6 +25,12 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:3', 'max:150'],
             'price' => ['required', 'numeric', 'min:0'],
+            'code' => ['nullable', 'string'],
+            'seo_url' => ['nullable', 'string'],
+            'description' => ['nullable', 'text'],
+            'parameters' => ['nullable', 'array'],
+            'parameters.*.name' => ['required_with:parameters', 'string', 'max:100'],
+            'parameters.*.value' => ['required_with:parameters', 'string', 'max:100'],
         ];
     }
 }
